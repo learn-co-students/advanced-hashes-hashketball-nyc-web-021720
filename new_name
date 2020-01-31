@@ -13,34 +13,37 @@
            end
         end
       end
-      
-      
-      def   player_numbers(team_name)
-   
-       baskt_hash = game_hash
-        new_arry = []
-     baskt_hash.each do |key, value|
-       
-     if value[:team_name] == team_name
-        
-     value.each do |team_key, team_value|
-       
-       if team_key == :players
-         team_value.each do |stats|
-           
-           stats.each do |in_key,in_stats|
-            # binding.pry
-             if in_key == :number
-          new_arry.sort! << in_stats 
-                  end
-              end
-          end
-       end
-    end
-
-  end    
+  
+  
+  
+  
+  
+     
+    def  winning_team
  
+  nets_total = 0
+  baskt_hash = game_hash
+  new_arry = []
+  new_arry = team_names
+  i = 0 
+  while i < baskt_hash[:home][:players].length   
+  nets_total += baskt_hash[:home][:players][i][:points]
+      i += 1
+  end
+  charlotte_total = 0 
+  x = 0 
+  while x < baskt_hash[:away][:players].length
+  charlotte_total += baskt_hash[:away][:players][x][:points]
+  x += 1
+  
  end
-  return new_arry
-end
-
+ 
+ if charlotte_total > nets_total
+   return new_arry[0]
+ else
+   return new_arry[1]
+end 
+binding.pry
+end              
+    
+  

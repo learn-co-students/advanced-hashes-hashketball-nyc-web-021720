@@ -261,21 +261,17 @@ end
 def  winning_team
  
   nets_total = 0
+  charlotte_total = 0
   baskt_hash = game_hash
   new_arry = []
   new_arry = team_names
   i = 0 
   while i < baskt_hash[:home][:players].length   
   nets_total += baskt_hash[:home][:players][i][:points]
+  charlotte_total += baskt_hash[:away][:players][i][:points]
       i += 1
   end
-  charlotte_total = 0 
-  x = 0 
-  while x < baskt_hash[:away][:players].length
-  charlotte_total += baskt_hash[:away][:players][x][:points]
-  x += 1
-  
- end
+
  
  if charlotte_total > nets_total
    return new_arry[0]
