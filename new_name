@@ -1,0 +1,46 @@
+ 
+   baskt_hash.each do |key, value|
+    if value[:team_name] == new_arry[0]
+      value.each do |team_key, team_value|
+     if team_key == :players
+      team_value.each do |stats|
+         
+            #stats.each do |in_key,in_stats|
+             
+             return [:players][2][:points]
+                binding.pry     
+              i += 1  
+           end
+        end
+      end
+      
+      
+      def   player_numbers(team_name)
+   
+       baskt_hash = game_hash
+        new_arry = []
+     baskt_hash.each do |key, value|
+       
+     if value[:team_name] == team_name
+        
+     value.each do |team_key, team_value|
+       
+       if team_key == :players
+         team_value.each do |stats|
+           
+           stats.each do |in_key,in_stats|
+            # binding.pry
+             if in_key == :number
+          new_arry.sort! << in_stats 
+                  end
+              end
+          end
+       end
+    end
+
+  end    
+ 
+ end
+  return new_arry
+end
+
