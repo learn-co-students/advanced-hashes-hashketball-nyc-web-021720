@@ -213,3 +213,19 @@ def big_shoe_rebounds
   end
   big_shoe_player[:rebounds]
 end
+
+def most_points_scored
+  high_score_player = nil 
+  game_hash.each do |place, team|
+    team[:players].each do |player|
+      if high_score_player == nil 
+        high_score_player = player 
+      else 
+        if player[:points] > high_score_player[:points]
+          high_score_player = player
+        end
+      end
+    end
+  end
+  high_score_player[:player_name]
+end
