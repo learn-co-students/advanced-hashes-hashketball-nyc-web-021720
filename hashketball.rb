@@ -235,14 +235,69 @@ def most_points_scored
 end
 
 def winning_team
-  
+  nets = 0
+  hornets = 0
+
+  game_hash.each do |location, team|
+    team.each do |attributes, data|
+      if attributes == :players
+        data.each do |player|
+          if location == :home
+            nets += player[:points]
+          elsif location == :away
+            hornets += player[:points]
+            if nets > hornets
+              return game_hash[:home][:team_name]
+            else
+              return game_hash[:away][:team_name]
+            end
+          end
+        end
+      end
+    end
+  end
 end
+
+
+
 
 def player_with_longest_name
-
+  name_length = 0
+  longest_name = nil
+  game_hash.each do |location, team|
+    team.each do |attributes, data|
+      if attributes == :players
+        data.each do |player|
+          if player[:player_name].length > name_length
+            name_length = player[:player_name].length
+            longest_name = player[:player_name]
+          end
+        end
+      end
+    end
+  end
+  longest_name
 end
 
-
+def long_name_steals_a_ton?
+  most_steals = 0
+  best_stealer = nil
+  game_hash.each do |location, team|
+    team.each do |attributes, data|
+      if attributes == :players
+        data.each do |player|
+          if player[:steals] > most_steals
+            most_steals = player[:steals]
+            best_stealer = player[:player_name]
+            if player_with_longest_name = best_stealer
+              return true
+            end
+          end
+        end
+      end
+    end
+  end
+end
 
 
 
