@@ -118,9 +118,9 @@ end
 
 def num_points_scored(chosen_name) # test is doing it - i think i'm iterating the name over the info i want so that the name => the points total
   game_hash.each do |home_away, team_data|
-    team_data.each do |players_key, nested_hash|
-        if players_key == :players
-          nested_hash.each do |player_stats|
+    team_data.each do |team_attributes, attribute_values|
+        if team_attributes == :players
+          attribute_values.each do |player_stats|
             if player_stats[:player_name] == chosen_name
               return player_stats[:points]
             end
@@ -132,10 +132,9 @@ end
 
 def shoe_size(chosen_name)
   game_hash.each do |home_away, team_data|
-    team_data.each do |players_key, nested_hash|
-      binding.pry
-      if players_key == :players
-        nested_hash.each do |player_stats|
+    team_data.each do |team_attributes, attribute_values|
+      if team_attributes == :players
+        attribute_values.each do |player_stats|
           if player_stats[:player_name] == chosen_name
             return player_stats[:shoe]
           end
@@ -146,25 +145,118 @@ def shoe_size(chosen_name)
 end
 
 def team_colors(chosen_team)
-  game_hash do |home_away, team_data|
-    team_data.each do |colors_key, nested_hash|
-      if colors_key == :colors
-        # nested_hash.each do |colors_arry|
-        #   if colors_arry[]
-        #
-        #   end
-        # end
-      end
+  game_hash.each do |location, team|
+    if team[:team_name] == chosen_team
+      return team[:colors]
     end
+  end
+end
+
+def team_names
+  game_hash.collect do |location, team| # can do with each but have to create and array and <<
+    team[:team_name]
   end
 end
 
 
 
+def player_numbers(chosen_team) # couldn't use map for some reason
+    #returns array of jerey #s for that team
+  nums = []
+  game_hash.each do |place, team|
+    if team[:team_name] == chosen_team
+      team.each do |attributes, data|
+        if attributes == :players
+          data.each do |player_stats|
+            nums << player_stats[:number]
+          end
+        end
+      end
+    end
+  end
+  nums
+end
+
+
+def player_stats(chosen_name)
+  new_hash = {}
+  game_hash.each do |location, team|
+    team.each do |attributes, data|
+      if attributes == :players
+        data.each do |player_stats|
+          if player_stats[:player_name] == chosen_name
+            new_hash = player_stats.delete_if do |k, v|
+              k == :player_name
+
+            end
+          end
+        end
+      end
+    end
+  end
+  new_hash
+end
+
+def big_shoe_rebounds
+  #return the number of rebounds associated with the player that has the largest shoe size
+  # find player with largest shoe_size
+  # i don't think this is the way... it's just shoe sizes in an array and they don't show me anything
+
+  shoes = []
+  game_hash.each do |location, team|
+    team.each do |attributes, data|
+      if attributes == :players
+        data.each do |player|
+          shoes = player.sort! do |shoe, size| shoe <=> size
+
+          end
+        end
+      end
+    end
+  end
+  shoes
+  binding.pry
+end
+
+# shoe_hash = {}
+# if !shoe_hash[:shoe]
+#   shoe_hash[:shoe] = player_stats[:rebounds]
+# end
+# actually if you could make shoe a key in a new hash that points to rebounds???
+
+# { player_name: "Mason Plumlee",
+#   number: 1,
+#   shoe: 19,
+#   points: 26,
+#   rebounds: 11,
+#   assists: 6,
+#   steals: 3,
+#   blocks: 8,
+#   slam_dunks: 5}
 
 
 
 
+
+
+
+
+
+# def big_shoe_rebounds
+#   shoe_size = []
+#   game_hash.each do |place,team|
+#     team.each do |attribute, data|
+#       if attribute == :players
+#         data.each do |player|
+#          shoe_size << player[:shoe]
+#           players.max
+#           binding.pry
+#           return player[:rebounds]
+#         end
+#       end
+#     end
+#   end
+# end
 
 
 
