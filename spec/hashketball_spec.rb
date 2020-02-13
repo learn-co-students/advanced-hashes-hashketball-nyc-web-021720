@@ -36,6 +36,7 @@ describe 'hashketball' do
       expect(num_points_scored("Brook Lopez")).to eq(17)
       expect(num_points_scored("Mason Plumlee")).to eq(26)
       expect(num_points_scored("Jason Terry")).to eq(19)
+
     end
 
   end
@@ -74,7 +75,6 @@ describe 'hashketball' do
         expect(["Brooklyn Nets", "Charlotte Hornets"]).to include(name)
       end
     end
-
   end
 
   describe '#player_numbers' do

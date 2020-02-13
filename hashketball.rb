@@ -1,6 +1,6 @@
 require "pry"
 def game_hash
-  hashketball = {
+  game_data = {
     home: { team_name: "Brooklyn Nets",
             colors: ["Black", "White"],
             players: [
@@ -112,7 +112,51 @@ def game_hash
             ]
     }
   }
-  
+end
+
+
+
+def num_points_scored(chosen_name) # test is doing it - i think i'm iterating the name over the info i want so that the name => the points total
+  game_hash.each do |home_away, team_data|
+    team_data.each do |players_key, nested_hash|
+        if players_key == :players
+          nested_hash.each do |player_stats|
+            if player_stats[:player_name] == chosen_name
+              return player_stats[:points]
+            end
+          end
+      end
+    end
+  end
+end
+
+def shoe_size(chosen_name)
+  game_hash.each do |home_away, team_data|
+    team_data.each do |players_key, nested_hash|
+      binding.pry
+      if players_key == :players
+        nested_hash.each do |player_stats|
+          if player_stats[:player_name] == chosen_name
+            return player_stats[:shoe]
+          end
+        end
+      end
+    end
+  end
+end
+
+def team_colors(chosen_team)
+  game_hash do |home_away, team_data|
+    team_data.each do |colors_key, nested_hash|
+      if colors_key == :colors
+        # nested_hash.each do |colors_arry|
+        #   if colors_arry[]
+        #
+        #   end
+        # end
+      end
+    end
+  end
 end
 
 
