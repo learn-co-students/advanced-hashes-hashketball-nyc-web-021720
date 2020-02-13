@@ -199,40 +199,48 @@ end
 
 def big_shoe_rebounds
   #return the number of rebounds associated with the player that has the largest shoe size
-  # find player with largest shoe_size
-  # i don't think this is the way... it's just shoe sizes in an array and they don't show me anything
-
-  shoes = []
+  biggest_shoe = 0
+  rebounds = 0
   game_hash.each do |location, team|
     team.each do |attributes, data|
       if attributes == :players
         data.each do |player|
-          shoes = player.sort! do |shoe, size| shoe <=> size
-
+          if player[:shoe] > biggest_shoe
+            biggest_shoe = player[:shoe]
+            rebounds = player[:rebounds]
           end
         end
       end
     end
   end
-  shoes
-  binding.pry
+  rebounds
 end
 
-# shoe_hash = {}
-# if !shoe_hash[:shoe]
-#   shoe_hash[:shoe] = player_stats[:rebounds]
-# end
-# actually if you could make shoe a key in a new hash that points to rebounds???
+def most_points_scored
+  most_points = 0
+  high_scorer = nil
+  game_hash.each do |location, team|
+    team.each do |attributes, data|
+      if attributes == :players
+        data.each do |player|
+          if player[:points] > most_points
+            most_points = player[:points]
+            high_scorer = player[:player_name]
+          end
+        end
+      end
+    end
+  end
+  high_scorer
+end
 
-# { player_name: "Mason Plumlee",
-#   number: 1,
-#   shoe: 19,
-#   points: 26,
-#   rebounds: 11,
-#   assists: 6,
-#   steals: 3,
-#   blocks: 8,
-#   slam_dunks: 5}
+def winning_team
+  
+end
+
+def player_with_longest_name
+
+end
 
 
 
@@ -241,22 +249,6 @@ end
 
 
 
-
-# def big_shoe_rebounds
-#   shoe_size = []
-#   game_hash.each do |place,team|
-#     team.each do |attribute, data|
-#       if attribute == :players
-#         data.each do |player|
-#          shoe_size << player[:shoe]
-#           players.max
-#           binding.pry
-#           return player[:rebounds]
-#         end
-#       end
-#     end
-#   end
-# end
 
 
 
