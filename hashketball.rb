@@ -228,3 +228,93 @@ def big_shoe_rebounds
   end
   rebounds
 end
+
+def most_points_scored
+  largest = 0
+  name = ""
+  game_hash.each do |place, team|
+    team.each do |attribute, data|
+      if attribute == :players
+        data.each do |player|
+          if num_points_scored(player[:player_name]) > largest
+            largest = player[:points]
+            name = player[:player_name]
+          end
+        end
+      end
+    end
+  end
+  name
+end
+
+def winning_team
+  away_points = 0
+  home_points = 0
+  game_hash.each do |place, team|
+    #calculate total home points
+    if place == :home
+      team.each do |attribute, data|
+        if attribute == :players
+          data.each do |player|
+            # if num_points_scored(player[:player_name]) > largest
+            #   largest = player[:points]
+            #   name = player[:player_name]
+            # end
+            home_points += player[:points]
+          end
+        end
+      end
+    end
+    #calculate total away points
+    if place == :away
+      team.each do |attribute, data|
+        if attribute == :players
+          data.each do |player|
+            away_points += player[:points]
+          end
+        end
+      end
+    end
+  end
+  if away_points > home_points
+    return game_hash[:away][:team_name]
+  else
+    return game_hash[:home][:team_name]
+  end
+end
+
+def player_with_longest_name
+  longest = ""
+  game_hash.each do |place, team|
+    team.each do |attributes, data|
+      if attributes == :players
+        data.each do |player|
+          if player[:player_name].length > longest.length
+            longest = player[:player_name]
+          end
+        end
+      end
+    end
+  end
+  longest
+end
+
+def long_name_steals_a_ton?
+  longest_name = player_with_longest_name()
+  most_steals = 0
+  steal_a_ton = nil
+  game_hash.each do |place, team|
+    team.each do |attributes, data|
+      if attributes == :players
+        data.each do |player|
+          if player[:player_name] == longest_name and most_steals < player[:steals]
+            steal_a_ton = true
+          elsif most_steals < player[:steals]
+            most_steals = player[:steals]
+          end
+        end
+      end
+    end
+  end
+  steal_a_ton
+end
