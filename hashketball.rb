@@ -209,3 +209,57 @@ def big_shoe_rebounds
   end
   rebounds
 end
+
+
+def most_points_scored
+  most_points = 0
+  highest_scorer = ""
+  game_hash.each do |home_away, keys|
+    keys[:players].each do |player|
+      points = player[:points]
+      if points > most_points
+        most_points = points
+        highest_scorer = player[:player_name]
+      end
+    end
+  end
+  highest_scorer
+end
+
+def winning_team
+  brooklyn_points = num_points_scored("Alan Anderson") + num_points_scored("Reggie Evans") + num_points_scored("Brook Lopez") + num_points_scored("Mason Plumlee") + num_points_scored("Jason Terry")
+  charlotte_points = num_points_scored("Jeff Adrien") + num_points_scored("Bismack Biyombo") + num_points_scored("DeSagna Diop") + num_points_scored("Ben Gordon") + num_points_scored("Kemba Walker")
+  if brooklyn_points > charlotte_points
+    return "Brooklyn Nets"
+  else
+    return "Charlotte Hornets"
+  end
+end
+
+
+def player_with_longest_name
+  longest_name = nil
+  game_hash.map do |team, team_level_stats|
+    team_level_stats.map do |team_level_keys, team_level_values|
+     if team_level_keys == :players
+      longest_name = team_level_values.max_by{ |player_hash| player_hash[:player_name].length }
+     end
+    end
+  end
+  longest_name[:player_name]
+end
+
+def long_name_steals_a_ton?
+  long_name_player = player_with_longest_name
+  most_steals_player = nil
+  game_hash.map do |team, team_level_stats|
+    team_level_stats.map do |team_level_keys, team_level_values|
+     if team_level_keys == :players
+      most_steals_player = team_level_values.max_by{ |player_hash| player_hash[:steals] }
+     end
+    end
+  end
+  if most_steals_player[:player_name] == long_name_player
+    return true
+  end
+end
