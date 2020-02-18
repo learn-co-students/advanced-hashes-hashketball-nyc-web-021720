@@ -119,12 +119,12 @@ end
 def num_points_scored(chosen_name) # test is doing it - i think i'm iterating the name over the info i want so that the name => the points total
   game_hash.each do |home_away, team_data|
     team_data.each do |team_attributes, attribute_values|
-        if team_attributes == :players
-          attribute_values.each do |player_stats|
-            if player_stats[:player_name] == chosen_name
-              return player_stats[:points]
-            end
+      if team_attributes == :players
+        attribute_values.each do |player_stats|
+          if player_stats[:player_name] == chosen_name
+            return player_stats[:points]
           end
+        end
       end
     end
   end
@@ -187,7 +187,6 @@ def player_stats(chosen_name)
           if player_stats[:player_name] == chosen_name
             new_hash = player_stats.delete_if do |k, v|
               k == :player_name
-
             end
           end
         end
@@ -257,8 +256,6 @@ def winning_team
     end
   end
 end
-
-
 
 
 def player_with_longest_name
