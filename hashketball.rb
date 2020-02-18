@@ -1,4 +1,3 @@
-
 def game_hash
   games_hash = {
     home:{
@@ -192,7 +191,7 @@ end
 
 def big_shoe_rebounds
   big_shoe = 0 
-  rebounds = 0 
+  rebounds = "" 
   game_hash.each do |key, value|
     value[:players].each do |stats|
    if stats[:shoe] > big_shoe
@@ -226,7 +225,7 @@ def winning_team
     team_name = game_hash[home_away][:team_name]
     keys[:players].each do |player|
       points = player[:points]
-      team_points += points
+      team_points = player[:points]
     end
     win_team, total_points = team_name, team_points if team_points > total_points
   end
@@ -239,9 +238,11 @@ def player_with_longest_name
   game_hash.each do |home_away, keys|
     keys[:players].each do |player|
       name_length = player[:player_name].length
-      longest, longest_length = player[:player_name], name_length if name_length > longest_length
+     longest_length = player[:player_name]
+     if name_length > longest_length
     end
   end
+end
   return longest
 end
 
@@ -258,3 +259,15 @@ end
   end
   return true if steals_most == player_with_longest_name
 end
+       
+       def player_with_longest_name 
+         longest = '' 
+         longest_length = 0 
+         game_hash.each do |location, info|
+           info[:players].each do |player|
+             name_length = player[:player_name].length 
+             longest, longest_length = player[:player_name], name_length if name_length > longest_length
+             end 
+             end 
+             return longest 
+             end
